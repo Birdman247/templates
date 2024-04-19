@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crossword Clue Finder</title>
+</head>
+<body>
+    <h1>Crossword Clue Finder</h1>
+    <form action="/get_clue" method="post">
+        <label for="direction">Direction (horizontal or vertical):</label><br>
+        <input type="text" id="direction" name="direction" required><br><br>
+        <label for="number">Puzzle Number:</label><br>
+        <input type="text" id="number" name="number" required><br><br>
+        <input type="submit" value="Get Clue">
+    </form>
+    <div id="clue"></div>
+    <script>
+        document.querySelector('form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const response = await fetch('/get_clue', {
+                method: 'POST',
+                body: formData
+            });
+            const clue = await response.text();
+            document.getElementById('clue').innerText = clue;
+        });
+    </script>
+</body>
+</html>
